@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/sideMenu.css">
+    <title>Student Dashboard</title>
+</head>
+
+<body>
+<div class="side-menu">
+    <div class="brand-name">
+        <h1>Quiz App</h1>
+    </div>
+    <ul>
+        <li><a href="/quizzesResults" class="ad"><span>Quizzes Results</span></a></li>
+        <li><a href="/logout" class="ad"><span>Logout</span></a></li>
+    </ul>
+</div>
+<div class="container">
+    <div class="header">
+        <div class="nav">
+            <div class="user">
+                <div>
+                    <img src="/images/user.png" alt="">
+                    <div th:text="${user.name} + ' ' + ${user.surname} " style="display: inline-block;  vertical-align:middle; margin-bottom: 25px"></div>
+                </div>
+            </div>
+        </div>
+    </div><br><br><br>
+    <div class="content">
+        <div class="cards">
+            <div class="card" th:each="quiz : ${quizzes}">
+                <div class="box">
+                    <a th:if="${quiz != null}" th:text="${quiz.title}" th:href="@{'/questionsList/' + ${quiz.id}}" class="quiz"></a>
+                </div>
+                <div class="icon-case">
+                    <img src="/images/students.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

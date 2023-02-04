@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Questions</title>
+    <style>
+        .del {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div th:each="question : ${questions}">
+    <a th:href="@{'/deleteQuestion/' + ${question.id}}" class="del">Delete Question</a><br><br>
+    <span th:text="${question.title}"></span>
+    <ul th:each="option : ${question.questionOptions}">
+        <li><input type="checkbox"  th:text="${option.title}"></li>
+    </ul>
+</div>
+</body>
+</html>

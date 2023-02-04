@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Questions</title>
+</head>
+<body>
+<form action="/answer" method="post">
+    <div th:each="question : ${questions}">
+        <span th:text="${question.title}"></span>
+        <input type="hidden" th:value="${question.quiz.id}" name="quizId">
+        <input type="hidden" th:value="${question.id}" name="questionsId">.
+        <ul th:each="option : ${question.questionOptions}">
+            <li><input type="checkbox" th:text="${option.title}" th:value="${option.id}" name="questionOptionsId"></li>
+        </ul>
+    </div>
+    <input type="submit" value="Submit" th:if="${!questions.isEmpty()}" >
+</form>
+</body>
+</html>

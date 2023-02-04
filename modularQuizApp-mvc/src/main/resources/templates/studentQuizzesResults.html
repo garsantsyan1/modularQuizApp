@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="/css/sideMenu.css">
+</head>
+<body>
+<div class="side-menu">
+    <div class="brand-name">
+        <h1>Quiz App</h1>
+    </div>
+    <ul>
+        <li><a href="/question/add" class="ad"><span>Add Question</span></a></li>
+        <li><a href="/all/students/" class="ad"><span>Students</span></a></li>
+        <li><a href="/logout" class="ad"><span>Logout</span></a></li>
+    </ul>
+</div>
+<div class="container">
+    <div class="header">
+        <div class="nav">
+            <div class="user">
+                <div>
+                    <img src="/images/user.png" alt="">
+                    <div style="display: inline-block;  vertical-align:middle; margin-bottom: 25px"><a href="/teach/page" th:text="${user.name} + ' ' + ${user.surname} "></div>
+                </div>
+            </div>
+        </div>
+    </div><br><br><br>
+    <div class="content">
+        <div class="content-2">
+            <div class="recent-payments">
+                <div class="title">
+                    <h2>Quizzes Results</h2>
+                </div>
+                <table>
+                    <tr>
+                        <th>Quiz</th>
+                        <th>Score</th>
+                    </tr>
+                    <tr th:each="element : ${quizMarks}">
+                        <td th:if="${element != null}" th:text="${element.key}"></td>
+                        <td th:if="${element != null}" th:text="${element.value}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
