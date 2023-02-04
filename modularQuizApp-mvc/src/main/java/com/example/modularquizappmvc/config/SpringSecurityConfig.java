@@ -31,7 +31,6 @@ public class SpringSecurityConfig {
                 .successHandler(myAuthenticationSuccessHandler())
                 .and()
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/deleteQuestion/{id}").hasRole("TEACHER")
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/user/add").permitAll()
                         .anyRequest().authenticated())
