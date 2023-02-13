@@ -69,9 +69,10 @@ public class QuestionController {
 
     @GetMapping("/quizzesResults")
     public String quizzesResults(ModelMap map, @AuthenticationPrincipal CurrentUser currentUser) {
-        Map<String, Integer> quizzesAndMarks = answerService.getQuizzesAndMarks(currentUser.getUser());
+        Map<String, String> quizzesAndMarks = answerService.getQuizzesAndMarks(currentUser.getUser());
+
+        map.addAttribute("quizzesAndMarks", quizzesAndMarks);
         map.addAttribute("user", currentUser.getUser());
-        map.addAttribute("quizMarks", quizzesAndMarks);
         return "quizzesResults";
     }
 

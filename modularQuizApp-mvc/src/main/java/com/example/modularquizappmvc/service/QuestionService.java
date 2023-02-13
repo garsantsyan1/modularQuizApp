@@ -5,13 +5,17 @@ import com.example.modularquizappcommon.dto.CreateQuestionRequest;
 import com.example.modularquizappcommon.entity.Question;
 import com.example.modularquizappcommon.entity.QuestionOption;
 import com.example.modularquizappcommon.entity.QuestionType;
+import com.example.modularquizappcommon.entity.Quiz;
 import com.example.modularquizappcommon.repository.QuestionOptionRepository;
 import com.example.modularquizappcommon.repository.QuestionRepository;
+import com.example.modularquizappcommon.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,8 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final QuestionOptionRepository questionOptionRepository;
+
+    private final QuizRepository quizRepository;
 
 
     public void deleteById(int id) {
@@ -36,6 +42,22 @@ public class QuestionService {
         Question question = getQuestion(createQuestionRequest, questionOptions, questionType);
         saveQuestionOption(questionOptions, question);
         questionRepository.save(question);
+    }
+
+
+    public Map<String, Integer> getGeneralAssessmentsOfQuizzes() {
+        Map<String, Integer> generalAssessmentsOfQuizzes = new HashMap<>();
+        int score = 0;
+        for (Quiz quiz : quizRepository.findAll()) {
+            List<Question> questionsByQuizId = questionRepository.getQuestionsByQuizId(quiz.getId());
+            for (Question question : questionsByQuizId) {
+                score += question.getScore();
+            }
+            generalAssessmentsOfQuizzes.put(quiz.getTitle(), score);
+            score = 0;
+        }
+
+        return generalAssessmentsOfQuizzes;
     }
 
     private Question getQuestion(CreateQuestionRequest createQuestionRequest, List<QuestionOption> questionOptions, QuestionType questionType) {

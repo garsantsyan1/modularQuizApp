@@ -60,7 +60,7 @@ public class UserController {
     @GetMapping("/studentQuizzes/{id}")
     public String studentQuizzes(@PathVariable("id") int id, ModelMap map, @AuthenticationPrincipal CurrentUser currentUser) {
         User user = userService.getUserById(id);
-        Map<String, Integer> quizzesAndMarks = answerService.getQuizzesAndMarks(user);
+        Map<String, String> quizzesAndMarks = answerService.getQuizzesAndMarks(user);
         map.addAttribute("user", currentUser.getUser());
         map.addAttribute("quizMarks", quizzesAndMarks);
         return "studentQuizzesResults";

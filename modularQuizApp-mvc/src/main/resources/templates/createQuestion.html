@@ -3,48 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Question</title>
-
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<h1>Create Quiz</h1>
-<form action="/question/add" method="post">
-    Quiz
-    <select name="quiz.id">
-        <option th:each="quiz: ${quizzes}" th:text="${quiz.title}" th:value="${quiz.id}"></option>
-    </select> <br>
-    Question Title:
-    <input type="text" name="title">
-    <div>
-        1)Question Option:
-        <input type="text" name="questionOption1.title">
-        Correct Answer:
-        <input type="checkbox" name="questionOption1.isCorrect" value="true">
-    </div>
-    <div>
-        2)Question Option:
-        <input type="text" name="questionOption2.title">
-        Correct Answer:
-        <input type="checkbox" name="questionOption2.isCorrect" value="true">
-    </div>
-    <div>
-        3)Question Option:
-        <input type="text" name="questionOption3.title">
-        Correct Answer:
-        <input type="checkbox" name="questionOption3.isCorrect" value="true">
-    </div>
-    <div>
-        4)Question Option:
-        <input type="text" name="questionOption4.title">
-        Correct Answer:
-        <input type="checkbox" name="questionOption4.isCorrect" value="true">
-    </div>
-    <div>
-        Score:
-        <input type="radio" name="score" value="1">1
-        <input type="radio" name="score" value="2">2
-        <input type="radio" name="score" value="3">3
-    </div>
-    <input type="submit" value="Add Quiz">
-</form>
+<div class="formWrap">
+    <h1>Create Question</h1>
+    <form action="/question/add" method="post">
+        Quiz
+        <select name="quiz.id">
+            <option th:each="quiz: ${quizzes}" th:text="${quiz.title}" th:value="${quiz.id}"></option>
+        </select> <br>
+        Question Title:
+        <input type="text" name="title">
+        <div>
+            1)Question Option:
+            <input type="text" name="questionOption1.title">
+            Correct Answer:
+            <input type="checkbox" name="questionOption1.isCorrect" value="true">
+        </div>
+        <div>
+            2)Question Option:
+            <input type="text" name="questionOption2.title">
+            Correct Answer:
+            <input type="checkbox" name="questionOption2.isCorrect" value="true">
+        </div>
+        <div>
+            3)Question Option:
+            <input type="text" name="questionOption3.title">
+            Correct Answer:
+            <input type="checkbox" name="questionOption3.isCorrect" value="true">
+        </div>
+        <div>
+            4)Question Option:
+            <input type="text" name="questionOption4.title">
+            Correct Answer:
+            <input type="checkbox" name="questionOption4.isCorrect" value="true">
+        </div>
+        <div>
+            Score:
+            <input type="radio" name="score" value="1">1
+            <input type="radio" name="score" value="2">2
+            <input type="radio" name="score" value="3">3
+        </div>
+        <input type="submit" value="Add Quiz">
+    </form>
+</div>
 </body>
 </html>

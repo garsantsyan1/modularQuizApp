@@ -21,7 +21,7 @@
             <div class="user">
                 <div>
                     <img src="/images/user.png" alt="">
-                    <div style="display: inline-block;  vertical-align:middle; margin-bottom: 25px"><a href="/student/page" th:text="${user.name} + ' ' + ${user.surname} "></div>
+                    <div style="display: inline-block;  vertical-align:middle; margin-bottom: 25px"><a href="/student/page" th:text="${user.name} + ' ' + ${user.surname} "></a></div>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                         <th>Quiz</th>
                         <th>Score</th>
                     </tr>
-                    <tr th:each="element : ${quizMarks}">
+                    <tr th:each="element : ${quizzesAndMarks}">
                         <td th:if="${element != null}" th:text="${element.key}"></td>
                         <td th:if="${element != null}" th:text="${element.value}"></td>
                     </tr>

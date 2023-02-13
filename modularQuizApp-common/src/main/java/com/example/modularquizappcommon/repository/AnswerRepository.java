@@ -18,5 +18,4 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer> {
     List<Integer> getAllQuestionOptionsIdByUserIdAndQuizId(int userId, int quizId);
 
 
-
 }

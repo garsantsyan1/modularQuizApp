@@ -26,6 +26,8 @@ public class AnswerService {
 
     private final QuizService quizService;
 
+    private final QuestionService questionService;
+
 
     public void save(Answer answer) {
         LocalDateTime now = LocalDateTime.now();
@@ -45,15 +47,28 @@ public class AnswerService {
         answerRepository.deleteAllByQuizId(quizId);
     }
 
-    public Map<String, Integer> getQuizzesAndMarks(User user) {
-        Map<String, Integer> quizMarks = new HashMap<>();
+    public Map<String, String> getQuizzesAndMarks(User user) {
+        Map<String, Integer> quizzesAndMarks = new HashMap<>();
         for (Quiz quiz : quizService.findAll()) {
             String title = quiz.getTitle();
             List<Integer> questionOptionsId = getQuestionOptionsIdByUserIdAndQuizId(user.getId(), quiz.getId());
             int score = getScore(questionOptionsId);
-            quizMarks.put(title, score);
+            quizzesAndMarks.put(title, score);
         }
-        return quizMarks;
+
+        Map<String, Integer> generalAssessments = questionService.getGeneralAssessmentsOfQuizzes();
+
+        Map<String, String> result = new HashMap<>();
+        for (Map.Entry<String, Integer> quizAndMark : quizzesAndMarks.entrySet()) {
+            for (Map.Entry<String, Integer> generalAssessment : generalAssessments.entrySet()) {
+                if (generalAssessment.getKey().equals(quizAndMark.getKey())) {
+                    result.put(quizAndMark.getKey(), quizAndMark.getValue() + " is " + generalAssessment.getValue());
+                    break;
+                }
+            }
+        }
+
+        return result;
     }
 
     public void addAnswer(AnswerQuestionsRequest answerQuestionsRequest, User user) {
@@ -70,18 +85,21 @@ public class AnswerService {
 
     public int getScore(List<Integer> questionOptionsId) {
         int result = 0;
+        List<Integer> ifHave = new ArrayList<>();
         for (Integer integer : questionOptionsId) {
 
             QuestionOption questionOption = questionOptionRepository.getReferenceById(integer);
             int score = questionOption.getQuestion().getScore();
             QuestionType type = questionOption.getQuestion().getType();
 
-            if (questionOption.getIsCorrect() & type.name().equals("SINGLE_SELECT")) {
+            if (questionOption.getIsCorrect() & type.name().equals("SINGLE_SELECT") & !ifHave.contains(integer)) {
                 result += score;
-            } else if (type.name().equals("MULTI_SELECT")) {
+                ifHave.add(integer);
+            } else if (type.name().equals("MULTI_SELECT") & !ifHave.contains(integer)) {
                 List<Integer> correctQuestionOptionsId = questionOptionRepository.getCorrectQuestionOptionsId(questionOption.getQuestion().getId());
                 if (questionOptionsId.containsAll(correctQuestionOptionsId)) {
                     result += score;
+                    ifHave.addAll(correctQuestionOptionsId);
                 }
             }
         }
@@ -90,7 +108,11 @@ public class AnswerService {
 
     private List<QuestionOption> getQuestionOptions(AnswerQuestionsRequest answerQuestionsRequest) {
         List<QuestionOption> questionOptions = new ArrayList<>();
-        for (Integer integer : answerQuestionsRequest.getQuestionOptionsId()) {
+        List<Integer> questionOptionsId = answerQuestionsRequest.getQuestionOptionsId();
+        if (questionOptionsId == null) {
+            return new ArrayList<>();
+        }
+        for (Integer integer : questionOptionsId) {
             questionOptions.add(questionOptionRepository.getReferenceById(integer));
         }
         return questionOptions;

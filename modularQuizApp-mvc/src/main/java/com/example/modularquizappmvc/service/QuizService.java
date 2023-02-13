@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -27,8 +28,10 @@ public class QuizService {
     }
 
     public void addQuiz(Quiz quiz) {
-        LocalDateTime now = LocalDateTime.now();
-        quiz.setCreatedDateTime(now);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String now = LocalDateTime.now().format(formatter);
+        LocalDateTime formatDateTime = LocalDateTime.parse(now, formatter);
+        quiz.setCreatedDateTime(formatDateTime);
         quizRepository.save(quiz);
     }
 

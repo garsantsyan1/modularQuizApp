@@ -4,7 +4,6 @@ package com.example.modularquizappmvc.controller;
 import com.example.modularquizappcommon.dto.AnswerQuestionsRequest;
 import com.example.modularquizappmvc.security.CurrentUser;
 import com.example.modularquizappmvc.service.AnswerService;
-import com.example.modularquizappmvc.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import java.util.Map;
 public class AnswerController {
     private final AnswerService answerService;
 
-    private final QuizService quizService;
 
     @PostMapping("/answer")
     public String answer(@ModelAttribute AnswerQuestionsRequest answerQuestionsRequest, ModelMap map, @AuthenticationPrincipal CurrentUser currentUser) {
@@ -28,10 +26,10 @@ public class AnswerController {
         }
 
         answerService.addAnswer(answerQuestionsRequest, currentUser.getUser());
-        Map<String, Integer> quizzesAndMarks = answerService.getQuizzesAndMarks(currentUser.getUser());
+        Map<String, String> quizzesAndMarks = answerService.getQuizzesAndMarks(currentUser.getUser());
 
         map.addAttribute("user", currentUser.getUser());
-        map.addAttribute("quizMarks", quizzesAndMarks);
+        map.addAttribute("quizzesAndMarks", quizzesAndMarks);
 
         return "quizzesResults";
 
