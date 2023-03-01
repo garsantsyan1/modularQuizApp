@@ -1,4 +1,4 @@
-package com.example.modularquizappmvc.service;
+package com.example.modularquizappcommon.service;
 
 
 import com.example.modularquizappcommon.dto.AnswerQuestionsRequest;
@@ -21,11 +21,8 @@ import java.util.Map;
 public class AnswerService {
 
     private final AnswerRepository answerRepository;
-
     private final QuestionOptionRepository questionOptionRepository;
-
     private final QuizService quizService;
-
     private final QuestionService questionService;
 
 
@@ -71,8 +68,9 @@ public class AnswerService {
         return result;
     }
 
-    public void addAnswer(AnswerQuestionsRequest answerQuestionsRequest, User user) {
+    public List<Answer> addAnswer(AnswerQuestionsRequest answerQuestionsRequest, User user) {
         List<QuestionOption> questionOptions = getQuestionOptions(answerQuestionsRequest);
+        List<Answer> answers = new ArrayList<>();
         for (QuestionOption questionOption : questionOptions) {
             Answer answer = Answer.builder()
                     .user(user)
@@ -80,7 +78,9 @@ public class AnswerService {
                     .questionOption(questionOption)
                     .build();
             save(answer);
+            answers.add(answer);
         }
+        return answers;
     }
 
     public int getScore(List<Integer> questionOptionsId) {

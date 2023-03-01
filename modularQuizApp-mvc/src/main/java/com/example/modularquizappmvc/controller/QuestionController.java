@@ -3,10 +3,10 @@ package com.example.modularquizappmvc.controller;
 
 import com.example.modularquizappcommon.dto.CreateQuestionRequest;
 import com.example.modularquizappcommon.entity.Question;
-import com.example.modularquizappmvc.security.CurrentUser;
-import com.example.modularquizappmvc.service.AnswerService;
-import com.example.modularquizappmvc.service.QuestionService;
-import com.example.modularquizappmvc.service.QuizService;
+import com.example.modularquizappcommon.security.CurrentUser;
+import com.example.modularquizappcommon.service.AnswerService;
+import com.example.modularquizappcommon.service.QuestionService;
+import com.example.modularquizappcommon.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,6 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final QuizService quizService;
-
     private final AnswerService answerService;
 
     @GetMapping("/question/add")
@@ -46,18 +45,13 @@ public class QuestionController {
 
     @GetMapping("/questions/{id}")
     public String questions(@PathVariable("id") int id, ModelMap map, @AuthenticationPrincipal CurrentUser currentUser) {
-        List<Question> allQuestions = questionService.getAllQuestions(id);
+        List<Question> allQuestions = questionService.getAllQuestionsByQuizId(id);
         map.addAttribute("questions", allQuestions);
         map.addAttribute("user", currentUser.getUser());
+        if (currentUser.getUser().getType().name().equals("STUDENT")) {
+            return "questionsList";
+        }
         return "questions";
-    }
-
-    @GetMapping("/questionsList/{id}")
-    public String questionsList(@PathVariable("id") int id, ModelMap map, @AuthenticationPrincipal CurrentUser currentUser) {
-        List<Question> allQuestions = questionService.getAllQuestions(id);
-        map.addAttribute("questions", allQuestions);
-        map.addAttribute("user", currentUser.getUser());
-        return "questionsList";
     }
 
 

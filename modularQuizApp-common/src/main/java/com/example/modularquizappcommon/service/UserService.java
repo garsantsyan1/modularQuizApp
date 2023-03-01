@@ -1,4 +1,4 @@
-package com.example.modularquizappmvc.service;
+package com.example.modularquizappcommon.service;
 
 
 import com.example.modularquizappcommon.entity.User;
@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,11 @@ public class UserService {
 
     public User getUserById(int id) {
         return userRepository.getReferenceById(id);
+    }
+
+
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
 }

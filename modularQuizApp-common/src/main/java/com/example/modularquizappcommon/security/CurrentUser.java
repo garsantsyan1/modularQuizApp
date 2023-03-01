@@ -1,4 +1,4 @@
-package com.example.modularquizappmvc.security;
+package com.example.modularquizappcommon.security;
 
 import com.example.modularquizappcommon.entity.User;
 import org.springframework.security.core.authority.AuthorityUtils;

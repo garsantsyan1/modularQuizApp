@@ -1,4 +1,4 @@
-package com.example.modularquizappmvc.config;
+package com.example.modularquizappcommon.config;
 
 
 import org.modelmapper.ModelMapper;

@@ -2,10 +2,10 @@ package com.example.modularquizappmvc.controller;
 
 
 import com.example.modularquizappcommon.entity.User;
-import com.example.modularquizappmvc.security.CurrentUser;
-import com.example.modularquizappmvc.service.AnswerService;
-import com.example.modularquizappmvc.service.QuizService;
-import com.example.modularquizappmvc.service.UserService;
+import com.example.modularquizappcommon.security.CurrentUser;
+import com.example.modularquizappcommon.service.AnswerService;
+import com.example.modularquizappcommon.service.QuizService;
+import com.example.modularquizappcommon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -22,10 +22,9 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-
     private final QuizService quizService;
-
     private final AnswerService answerService;
+
 
     @PostMapping("/user/add")
     public String addUser(@ModelAttribute User user) {
@@ -64,7 +63,6 @@ public class UserController {
         map.addAttribute("user", currentUser.getUser());
         map.addAttribute("quizMarks", quizzesAndMarks);
         return "studentQuizzesResults";
-
     }
 
 }

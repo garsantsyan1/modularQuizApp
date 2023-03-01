@@ -3,6 +3,12 @@ spring:
     url: jdbc:mysql://localhost:3306/quiz_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: root
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 server:
   port: 8081
+
+jwt:
+  expiration: 330000
+  secret: 2ljfl%4k5j4l32@@FLDKFLDS

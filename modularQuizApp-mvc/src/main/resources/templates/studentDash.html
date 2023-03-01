@@ -34,7 +34,7 @@
         <div class="cards">
             <div class="card" th:each="quiz : ${quizzes}">
                 <div class="box">
-                    <a th:if="${quiz != null}" th:text="${quiz.title}" th:href="@{'/questionsList/' + ${quiz.id}}" class="quiz"></a>
+                    <a th:if="${quiz != null}" th:text="${quiz.title}" th:href="@{'/questions/' + ${quiz.id}}" class="quiz"></a>
                 </div>
                 <div class="icon-case">
                     <img src="/images/students.png" alt="">

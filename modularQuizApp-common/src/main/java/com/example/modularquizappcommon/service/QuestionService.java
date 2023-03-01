@@ -1,4 +1,4 @@
-package com.example.modularquizappmvc.service;
+package com.example.modularquizappcommon.service;
 
 
 import com.example.modularquizappcommon.dto.CreateQuestionRequest;
@@ -23,7 +23,6 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final QuestionOptionRepository questionOptionRepository;
-
     private final QuizRepository quizRepository;
 
 
@@ -31,17 +30,22 @@ public class QuestionService {
         questionRepository.deleteById(id);
     }
 
-    public List<Question> getAllQuestions(int quizId) {
+    public boolean existsById(int id) {
+        return questionRepository.existsById(id);
+    }
+
+    public List<Question> getAllQuestionsByQuizId(int quizId) {
         return questionRepository.findAllByQuiz_Id(quizId);
     }
 
 
-    public void addQuestion(CreateQuestionRequest createQuestionRequest) {
+    public Question addQuestion(CreateQuestionRequest createQuestionRequest) {
         List<QuestionOption> questionOptions = getQuestionOptions(createQuestionRequest);
         QuestionType questionType = getQuestionType(questionOptions);
         Question question = getQuestion(createQuestionRequest, questionOptions, questionType);
         saveQuestionOption(questionOptions, question);
         questionRepository.save(question);
+        return question;
     }
 
 
@@ -107,4 +111,5 @@ public class QuestionService {
         }
         return questionOptions;
     }
+
 }

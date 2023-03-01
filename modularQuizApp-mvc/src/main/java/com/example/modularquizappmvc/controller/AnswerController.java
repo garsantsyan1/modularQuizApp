@@ -2,8 +2,8 @@ package com.example.modularquizappmvc.controller;
 
 
 import com.example.modularquizappcommon.dto.AnswerQuestionsRequest;
-import com.example.modularquizappmvc.security.CurrentUser;
-import com.example.modularquizappmvc.service.AnswerService;
+import com.example.modularquizappcommon.security.CurrentUser;
+import com.example.modularquizappcommon.service.AnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -32,7 +32,6 @@ public class AnswerController {
         map.addAttribute("quizzesAndMarks", quizzesAndMarks);
 
         return "quizzesResults";
-
     }
 
 }

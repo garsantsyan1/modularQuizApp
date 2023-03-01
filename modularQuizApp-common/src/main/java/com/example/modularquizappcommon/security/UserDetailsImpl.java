@@ -1,4 +1,4 @@
-package com.example.modularquizappmvc.security;
+package com.example.modularquizappcommon.security;
 
 import com.example.modularquizappcommon.entity.User;
 import com.example.modularquizappcommon.repository.UserRepository;
@@ -20,7 +20,7 @@ public class UserDetailsImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<User> byEmail = userRepository.findByEmail(username);
-        if (!byEmail.isPresent()) {
+        if (byEmail.isEmpty()) {
             throw new UsernameNotFoundException("username" + username + " not found");
         }
         return new CurrentUser(byEmail.get());
